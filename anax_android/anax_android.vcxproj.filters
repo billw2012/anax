@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClInclude Include="..\include\anax\anax.hpp" />
+    <ClInclude Include="..\include\anax\Component.hpp" />
+    <ClInclude Include="..\include\anax\Entity.hpp" />
+    <ClInclude Include="..\include\anax\FilterOptions.hpp" />
+    <ClInclude Include="..\include\anax\System.hpp" />
+    <ClInclude Include="..\include\anax\World.hpp" />
+    <ClInclude Include="..\include\anax\detail\AnaxAssert.hpp" />
+    <ClInclude Include="..\include\anax\detail\BaseSystem.hpp" />
+    <ClInclude Include="..\include\anax\detail\ClassTypeId.hpp" />
+    <ClInclude Include="..\include\anax\detail\ComponentTypeList.hpp" />
+    <ClInclude Include="..\include\anax\detail\EntityComponentStorage.hpp" />
+    <ClInclude Include="..\include\anax\detail\EntityIdPool.hpp" />
+    <ClInclude Include="..\include\anax\detail\Filter.hpp" />
+    <ClInclude Include="..\include\anax\util\ContainerUtils.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\include\anax\Config.hpp.inl" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\src\anax\Entity.cpp" />
+    <ClCompile Include="..\src\anax\World.cpp" />
+    <ClCompile Include="..\src\anax\detail\BaseSystem.cpp" />
+    <ClCompile Include="..\src\anax\detail\EntityComponentStorage.cpp" />
+    <ClCompile Include="..\src\anax\detail\EntityIdPool.cpp" />
+    <ClCompile Include="..\src\anax\detail\Filter.cpp" />
+  </ItemGroup>
+</Project>
