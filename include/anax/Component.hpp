@@ -42,6 +42,9 @@ namespace anax
         virtual
 #	endif // ANAX_VIRTUAL_DTORS_IN_COMPONENT
         ~Component() {}
+
+		template<class Archive>
+		void serialize(Archive& archive) {}
     };
 
     template <class T, class = typename std::enable_if<std::is_base_of<Component, T>::value>::type>
