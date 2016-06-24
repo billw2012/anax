@@ -29,6 +29,11 @@
 #include <type_traits>
 #include <utility>
 #include <cstdint>
+#include <memory>
+
+#include "cereal/types/bitset.hpp"
+#include "cereal/types/vector.hpp"
+#include "cereal/types/memory.hpp"
 
 #include <anax/detail/ClassTypeId.hpp>
 #include <anax/detail/ComponentTypeList.hpp>
@@ -112,6 +117,12 @@ namespace anax
 
             int_type index : ANAX_ENTITY_ID_INDEX_BIT_COUNT;
             int_type counter : ANAX_ENTITY_ID_COUNTER_BIT_COUNT;
+
+			template < typename Archive >
+			void serialize(Archive& archive) const
+			{
+				archive(*(int_type*)this);
+			}
         };
 
         /// Default constructor
@@ -193,14 +204,37 @@ namespace anax
         bool operator==(const Entity& entity) const;
         bool operator!=(const Entity& entity) const { return !operator==(entity); }
 
-    private:
+		//template<class Archive>
+		//void save(Archive& archive/*, const std::uint32_t version*/) const
+		//{
+		//	//archive(getComponentTypeList(), getComponents());
+		//}
 
-        // wrappers to add components
-        // so I may call them from templated public interfaces
-        void addComponent(Component* component, detail::TypeId componentTypeId);
+		//template<class Archive>
+		//void load(Archive& archive/*, const std::uint32_t version*/)
+		//{
+		//	//detail::ComponentTypeList type_list;
+		//	//ComponentArray comp_list;
+
+		//	//archive(type_list, comp_list);
+
+		//	//if (type_list.size() != comp_list.size())
+		//	//	throw new std::runtime_error("Entity deserialization: type_list length does not match comp_list length");
+
+		//	//for(int idx = 0; idx < type_list.size(); ++idx)
+		//	//{
+		//	//	addComponent(comp_list[idx], type_list[idx]);
+		//	//}
+		//}
+
+		// wrappers to add components
+		// so I may call them from templated public interfaces
+		void addComponent(Component* component, detail::TypeId componentTypeId);
+		bool hasComponent(detail::TypeId componentTypeId) const;
+		Component& getComponent(detail::TypeId componentTypeId) const;
+
+    private:
         void removeComponent(detail::TypeId componentTypeId);
-        Component& getComponent(detail::TypeId componentTypeId) const;
-        bool hasComponent(detail::TypeId componentTypeId) const;
 
 
         /// The ID of the Entity
