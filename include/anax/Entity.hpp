@@ -31,10 +31,6 @@
 #include <cstdint>
 #include <memory>
 
-#include "cereal/types/bitset.hpp"
-#include "cereal/types/vector.hpp"
-#include "cereal/types/memory.hpp"
-
 #include <anax/detail/ClassTypeId.hpp>
 #include <anax/detail/ComponentTypeList.hpp>
 
