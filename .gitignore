@@ -24,6 +24,7 @@ DeploymentStatus.xml
 [Dd]ebugPublic/
 [Rr]elease/
 [Rr]eleases/
+[Pp]rofile/
 x64/
 x86/
 bld/
