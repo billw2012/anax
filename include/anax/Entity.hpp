@@ -113,12 +113,6 @@ namespace anax
 
             int_type index : ANAX_ENTITY_ID_INDEX_BIT_COUNT;
             int_type counter : ANAX_ENTITY_ID_COUNTER_BIT_COUNT;
-
-			template < typename Archive >
-			void serialize(Archive& archive) const
-			{
-				archive(*(int_type*)this);
-			}
         };
 
         /// Default constructor
