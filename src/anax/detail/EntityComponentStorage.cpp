@@ -70,7 +70,8 @@ namespace anax
 
         Component& EntityComponentStorage::getComponent(const Entity& entity, TypeId componentTypeId) const
         {
-            ANAX_ASSERT(entity.isValid() && hasComponent(entity, componentTypeId), "Entity is not valid or does not contain component");
+			ANAX_ASSERT(entity.isValid(), "Entity is not valid");
+			ANAX_ASSERT(hasComponent(entity, componentTypeId), "Entity does not contain component");
 
             return *getComponentsImpl(entity)[componentTypeId];
         }

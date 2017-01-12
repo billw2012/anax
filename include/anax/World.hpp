@@ -31,6 +31,7 @@
 #include <unordered_map>
 #include <type_traits>
 #include <utility>
+#include <functional>
 
 #include <anax/detail/EntityIdPool.hpp>
 #include <anax/detail/EntityComponentStorage.hpp>
@@ -41,6 +42,23 @@
 
 namespace anax
 {
+
+#if defined( _DEBUG ) && !defined( DEBUG )
+#	define DEBUG
+#endif
+
+#if defined(DEBUG)
+extern std::function<void(const std::string& msg)> anax_log;
+#	define ANAX_LOG(msg) { if(anax_log) anax_log(msg); }
+//#	if defined(_MSC_VER)
+#		define ANAX_LOG_FN_CALL { if(anax_log) anax_log(__func__); }
+//#	elif defined(__GNUC__) || defined(__clang__)
+//#		define ANAX_LOG_FN_CALL anax_log(__FUNCSIG__)
+//#	endif
+#else
+#	define ANAX_LOG(msg)
+#endif
+
     class World
     {
     private:

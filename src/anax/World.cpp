@@ -34,6 +34,10 @@
 
 namespace anax
 {
+#if defined(DEBUG)
+	std::function<void(const std::string& msg)> anax_log;
+#endif
+
     void World::SystemDeleter::operator() (detail::BaseSystem* system) const
     {
         system->m_world = nullptr;
@@ -58,6 +62,8 @@ namespace anax
 
     Entity World::createEntity()
     {
+		ANAX_LOG_FN_CALL;
+
         checkForResize(1);
 
         m_entityCache.alive.emplace_back(*this, m_entityIdPool.create());
@@ -66,6 +72,8 @@ namespace anax
 
     std::vector<Entity> World::createEntities(std::size_t amount)
     {
+		ANAX_LOG_FN_CALL;
+
         std::vector<Entity> temp;
         temp.reserve(amount);
 
@@ -83,6 +91,11 @@ namespace anax
 
     void World::killEntity(Entity& entity)
     {
+		ANAX_LOG_FN_CALL;
+		ANAX_ASSERT(isValid(entity), "invalid entity tried to kill");
+		ANAX_ASSERT(std::find(std::cbegin(m_entityCache.killed), std::cend(m_entityCache.killed), entity) == std::cend(m_entityCache.killed), 
+					"entity tried to kill multiple times");
+
         // deactivate the entity
         deactivateEntity(entity);
 
@@ -92,6 +105,8 @@ namespace anax
 
     void World::killEntities(std::vector<Entity>& entities)
     {
+		ANAX_LOG_FN_CALL;
+
         for(auto& i : entities)
         {
             killEntity(i);
@@ -100,6 +115,7 @@ namespace anax
 
     void World::activateEntity(Entity& entity)
     {
+		ANAX_LOG_FN_CALL;
         ANAX_ASSERT(isValid(entity), "invalid entity tried to be activated");
 
         m_entityCache.activated.push_back(entity);
@@ -107,6 +123,7 @@ namespace anax
 
     void World::deactivateEntity(Entity& entity)
     {
+		ANAX_LOG_FN_CALL;
         ANAX_ASSERT(isValid(entity), "invalid entity tried to be deactivated");
 
         m_entityCache.deactivated.push_back(entity);
@@ -127,6 +144,7 @@ namespace anax
 
     void World::refresh()
     {
+		ANAX_LOG_FN_CALL;
         // go through all the activated entities from last call to refresh
         for(auto& entity : m_entityCache.activated)
         {
@@ -235,12 +253,14 @@ namespace anax
 
     void World::resize(std::size_t amount)
     {
+		ANAX_LOG_FN_CALL;
         m_entityIdPool.resize(amount);
         m_entityAttributes.resize(amount);
     }
 
     void World::addSystem(detail::BaseSystem& system, detail::TypeId systemTypeId)
     {
+		ANAX_LOG_FN_CALL;
         ANAX_ASSERT(!system.m_world, "System is already contained within a World");
         ANAX_ASSERT(m_systems.count(systemTypeId) == 0, "System of this type is already contained within the world");
 
@@ -252,6 +272,7 @@ namespace anax
 
     void World::removeSystem(detail::TypeId systemTypeId)
     {
+		ANAX_LOG_FN_CALL;
         ANAX_ASSERT(doesSystemExist(systemTypeId), "System does not exist in world");
         m_systems.erase(systemTypeId);
     }

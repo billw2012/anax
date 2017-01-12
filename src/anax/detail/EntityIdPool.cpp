@@ -47,7 +47,9 @@ namespace anax
             {
                 id = m_freeList.back();
                 m_freeList.pop_back();
-            }
+
+				ANAX_ASSERT(isValid(id), "Trying to create invalid ID");
+			}
             else
             {
                 id.index = m_nextId++;
@@ -57,11 +59,13 @@ namespace anax
                 m_counts[id.index] = id.counter = 1; 
             }
 
-            return id;
+			return id;
         }
 
         void EntityIdPool::remove(Entity::Id id)
         {
+			ANAX_ASSERT(isValid(id), "Trying to remove invalid ID");
+
             auto& counter = m_counts[id.index];
             ++counter; // increment the counter in the cache
             m_freeList.emplace_back(static_cast<Entity::Id::int_type>(id.index), counter); // add the ID to the freeList
