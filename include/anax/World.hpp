@@ -56,6 +56,7 @@ extern std::function<void(const std::string& msg)> anax_log;
 //#		define ANAX_LOG_FN_CALL anax_log(__FUNCSIG__)
 //#	endif
 #else
+#	define ANAX_LOG_FN_CALL
 #	define ANAX_LOG(msg)
 #endif
 
